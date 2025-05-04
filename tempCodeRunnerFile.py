@@ -5,9 +5,6 @@ from app import application
 logging.basicConfig(level=logging.ERROR)
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=UserWarning, module='torch')
-logging.getLogger("httpx").setLevel(logging.WARNING)
-logging.getLogger("httpcore").setLevel(logging.WARNING)
-logging.getLogger("openai").setLevel(logging.WARNING)
 from tqdm import tqdm
 tqdm.disable = True
 
