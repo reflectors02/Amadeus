@@ -2,7 +2,8 @@ from Amadeus import getOutput, getTranslation
 from AmadeusSpeak import generateVoice, play_sound
 from tkinter import *
 from tkinter import ttk, PhotoImage
-
+import app
+import requests
 #Pygame 
 
 def makeWindow():
@@ -28,6 +29,11 @@ def makeWindow():
         generateVoice(response)
         output_string.set(response)
         translated_string.set(translated)
+        
+        # try:
+        #     requests.post("http://127.0.0.1:5000/print_message", json={"msg": translated})
+        # except Exception as e:
+        #     print(f"[GUI] Failed to send message to Flask: {e}")
     
     def on_send():
         send_message()
