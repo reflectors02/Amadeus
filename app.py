@@ -22,9 +22,9 @@ def set_api_key():
 def request_message():
     content = request.get_json()
     user_input = content.get("user_input", "")
-    result = getOutput(user_input)
-    generateVoice(result)
-    result = getTranslation(result)
+    assistant_reply_ENG = getOutput(user_input)
+    assistant_reply_JPS = getTranslation(assistant_reply_ENG)
+    generateVoice(assistant_reply_JPS)
     threading.Thread(target=play_sound).start()
-    return jsonify({"response": result})
+    return jsonify({"response": assistant_reply_ENG})
 

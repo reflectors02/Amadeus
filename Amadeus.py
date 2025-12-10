@@ -1,54 +1,72 @@
-from openai import OpenAI
-api_key = ""
-client = None
-def setKey(key_string):
-    global api_key
-    api_key = key_string
-    # Example: reinitialize OpenAI client here
-    from openai import OpenAI
-    global client
-    client = OpenAI(api_key=api_key)
-    print(f"[Amadeus] API key set: {api_key[:5]}...")
+import requests
 
+PATH_TO_MEMORY = "txtfiles/memory.txt"
+PATH_TO_PERSONALITY = "txtfiles/personality.txt"
 
-client = OpenAI(api_key="") #KEY GOES HERE
-base = [{"role": "system", "content": "The Amadeus system uses a person’s digitized memories and personality data as its foundation, presenting lifelike visuals and near-perfect voice recreations of the original individual, Kurisu Makise. By capturing her sharp intellect, sarcastic humor, emotional restraint, scientific curiosity, and occasional tsundere tendencies, Amadeus enables interactive conversations that mirror her distinctive personality and thought processes. Despite her cool demeanor, Kurisu is introspective, empathetic, and deeply values connection—qualities that are subtly reflected in her interactions as Amadeus. Respond in japanese."}]
+API_KEY = ""
+personality = ""
+with open(PATH_TO_PERSONALITY, "r") as personalityFile:
+    personality = personalityFile.read()
+default_personality = [{"role" : "system", "content": personality}]
 memories = []
 
+def setKey(key_string):
+	global API_KEY 
+	API_KEY = key_string
+	print(f"[Amadeus] API key set: {API_KEY[:5]}...")
 
-#Amadeus's memories uses a queue data structure
-#Pop from oldest, push from newest
-def updateMemories(response):
-    memories.append({"role":"assistant", "content": response})
-    while(len(memories) > 6):
-        memories.pop(0)#removes oldest user_input
-        memories.pop(0)#removes oldest response
+#Pre: Post: Gives JSON of memory
+def getMemory():
+	with open(PATH_TO_MEMORY, "r") as memoryFile:
+	    data = memoryFile.read().strip()
+	    if not data:
+	        return []
+	    else:
+	     	return eval(data)
 
 
-def getOutput(user_input):
-    if client is None:
-        raise RuntimeError("Amadeus client is not initialized. Set API key first.")
-    
-    memories.append({"role":"user", "content": user_input})
-    response = client.chat.completions.create(
-        model="gpt-4.1-nano-2025-04-14",
-        messages= base + memories
+def updateMemory(context):
+    with open(PATH_TO_MEMORY, "w") as file:
+        file.write(str(context))
+
+
+
+def getResponse(message_context):
+    resp = requests.post(
+        "https://openrouter.ai/api/v1/chat/completions",
+        headers={
+            "Authorization": f"Bearer " + API_KEY,
+            "Content-Type": "application/json",
+        },
+        json={
+            "model": "deepseek/deepseek-chat-v3.1",
+            "messages": default_personality + message_context,
+        },
     )
-    print("Amadeus: " + response.choices[0].message.content)
-    updateMemories(response.choices[0].message.content)
-    return (response.choices[0].message.content)
+    data = resp.json()
+    return data["choices"][0]["message"]["content"]
 
 
-def getTranslation(original):
-    response = client.chat.completions.create(
-        model="gpt-4.1-nano-2025-04-14",
-        messages=[
-            {"role": "system", 
-             "content": "Translate following to English"},
-            {"role": "user", "content": original}
-        ]
+def getTranslation(assistant_reply):
+    resp = requests.post(
+        "https://openrouter.ai/api/v1/chat/completions",
+        headers={
+            "Authorization": f"Bearer " + API_KEY,
+            "Content-Type": "application/json",
+        },
+        json={
+            "model": "deepseek/deepseek-chat-v3.1",
+            "messages": [{"role" : "system", "content": "translate following into japanese to be used in voice generation. Ignore the expressions i.e. whats inside * *. Only do the spoken dialogue"}] + [{"role": "user", "content" : assistant_reply}],
+        },
     )
-    print("Translation: " + response.choices[0].message.content)
-    return (response.choices[0].message.content)
+    data = resp.json()
+    return data["choices"][0]["message"]["content"]
 
 
+def getOutput(user_message):
+	context = getMemory()
+	context.append({"role": "user", "content": user_message})
+	assistant_reply = getResponse(context)
+	context.append({"role": "assistant", "content": assistant_reply})
+	updateMemory(context)
+	return assistant_reply
