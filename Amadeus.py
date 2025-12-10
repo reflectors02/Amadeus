@@ -17,12 +17,12 @@ def setKey(key_string):
 
 #Pre: Post: Gives JSON of memory
 def getMemory():
-	with open(PATH_TO_MEMORY, "r") as memoryFile:
-	    data = memoryFile.read().strip()
-	    if not data:
-	        return []
-	    else:
-	     	return eval(data)
+    with open(PATH_TO_MEMORY, "r") as memoryFile:
+        data = memoryFile.read().strip()
+        if not data:
+            return []
+        else:
+            return eval(data)
 
 
 def updateMemory(context):
