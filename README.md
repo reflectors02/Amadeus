@@ -34,3 +34,6 @@
 4. Better error handling for memory/key loading.
 
 5. Backend architecture simplified and made more maintainable.
+
+6. UI-Improvements:
+<img width="1924" height="1154" alt="image" src="https://github.com/user-attachments/assets/0d3a27e6-9b96-4d31-9b0a-bc321193bd92" />
