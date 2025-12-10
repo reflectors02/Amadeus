@@ -1,4 +1,5 @@
 **Amadeus – Release Notes (OpenRouter Upgrade) --- 12/9/25**
+
 **New Features**
 
 1. OpenRouter Integration
