@@ -1,5 +1,5 @@
-Amadeus – Release Notes (OpenRouter Upgrade) --- 12/9/25
-New Features
+#Amadeus – Release Notes (OpenRouter Upgrade) --- 12/9/25
+##New Features
 
 1. OpenRouter Integration
    Replaced the old OpenAI client with a fully vendor-agnostic OpenRouter HTTP API.
@@ -21,18 +21,16 @@ New Features
    No need for the user to re-enter the key every session.
 
 
-Improvements
+##Improvements
 
-Updated Flask backend to use new OpenRouter-based response pipeline.
+1. Updated Flask backend to use new OpenRouter-based response pipeline.
 
-Clean separation between:
+2. Clean separation between:
+   -English chat output
+   -Japanese TTS output (for GPT-SoVITS)
 
-English chat output
+3. Fixed path issues by switching to project-relative paths.
 
-Japanese TTS output (for GPT-SoVITS)
+4. Better error handling for memory/key loading.
 
-Fixed path issues by switching to project-relative paths.
-
-Better error handling for memory/key loading.
-
-Backend architecture simplified and made more maintainable.
+5. Backend architecture simplified and made more maintainable.
