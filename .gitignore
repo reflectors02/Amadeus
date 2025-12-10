@@ -4,3 +4,4 @@ __pycache__/
 *.env
 pretrained_models/
 unused_files/
+api_key.txt

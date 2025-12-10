@@ -2,18 +2,21 @@ import requests
 
 PATH_TO_MEMORY = "txtfiles/memory.txt"
 PATH_TO_PERSONALITY = "txtfiles/personality.txt"
+PATH_TO_API_KEY = "txtfiles/api_key.txt"
 
 API_KEY = ""
 personality = ""
+memories = []
+
 with open(PATH_TO_PERSONALITY, "r") as personalityFile:
     personality = personalityFile.read()
 default_personality = [{"role" : "system", "content": personality}]
-memories = []
 
 def setKey(key_string):
-	global API_KEY 
-	API_KEY = key_string
-	print(f"[Amadeus] API key set: {API_KEY[:5]}...")
+    global API_KEY 
+    API_KEY = key_string
+    updateAPIKEY(key_string)        
+    print(f"[Amadeus] API key set: {API_KEY[:5]}...")
 
 #Pre: Post: Gives JSON of memory
 def getMemory():
@@ -24,12 +27,18 @@ def getMemory():
         else:
             return eval(data)
 
-
 def updateMemory(context):
     with open(PATH_TO_MEMORY, "w") as file:
         file.write(str(context))
 
+def updateAPIKEY(key_string):
+    with open(PATH_TO_API_KEY, "w") as apikeyFile:
+        apikeyFile.write(key_string)
 
+with open(PATH_TO_API_KEY, "r") as apikeyFile:
+     trial_api_key = apikeyFile.read()
+     if trial_api_key:
+        setKey(trial_api_key)
 
 def getResponse(message_context):
     resp = requests.post(
