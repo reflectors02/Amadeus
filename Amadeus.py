@@ -1,4 +1,5 @@
 import requests
+import os
 
 PATH_TO_MEMORY = "txtfiles/memory.txt"
 PATH_TO_PERSONALITY = "txtfiles/personality.txt"
@@ -47,7 +48,7 @@ def updateAPIKEY(key_string):
 if not os.path.exists(PATH_TO_API_KEY):
     with open(PATH_TO_API_KEY, 'w') as f:
         pass
-        
+
 with open(PATH_TO_API_KEY, "r") as apikeyFile:
      trial_api_key = apikeyFile.read()
      if trial_api_key:
