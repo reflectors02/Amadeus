@@ -42,6 +42,12 @@ def updateAPIKEY(key_string):
     with open(PATH_TO_API_KEY, "w") as apikeyFile:
         apikeyFile.write(key_string)
 
+#pre:
+#post: set key to whatever the file has, if files doesn't exist, then make one as empty
+if not os.path.exists(PATH_TO_API_KEY):
+    with open(PATH_TO_API_KEY, 'w') as f:
+        pass
+        
 with open(PATH_TO_API_KEY, "r") as apikeyFile:
      trial_api_key = apikeyFile.read()
      if trial_api_key:
