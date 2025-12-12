@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from Amadeus import getOutput, getTranslation, setKey
+from Amadeus import getOutput, getTranslation, setKey, resetMemory
 from AmadeusSpeak import generateVoice, play_sound
 from flask_cors import CORS
 import threading
@@ -27,4 +27,11 @@ def request_message():
     generateVoice(assistant_reply_JPS)
     threading.Thread(target=play_sound).start()
     return jsonify({"response": assistant_reply_ENG})
+
+@application.route("/memory_reset", methods=["POST"])
+def memory_reset():
+    resetMemory()
+    return jsonify({"status": "ok", "message": "Memory reset"})
+
+
 

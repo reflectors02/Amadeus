@@ -37,6 +37,13 @@ def updateMemory(context):
     with open(PATH_TO_MEMORY, "w") as file:
         file.write(str(context))
 
+#pre:
+#post: memory.txt should be set to nothing
+def resetMemory():
+    with open(PATH_TO_MEMORY, "w") as file:
+        file.write("")
+        print("[Amadeus] Memory Reset!")
+
 #pre: new apikey is passed in as key_string. 
 #post: update apikey by overwrite api_key.txt with key_string
 def updateAPIKEY(key_string):
@@ -98,3 +105,4 @@ def getOutput(user_message):
 	context.append({"role": "assistant", "content": assistant_reply})
 	updateMemory(context)
 	return assistant_reply
+
