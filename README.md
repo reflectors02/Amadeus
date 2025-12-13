@@ -1,4 +1,24 @@
 # Amadeus
+## Setup (Conda Recommended)
+
+This project uses a Conda environment.
+
+### 1. Install Conda
+Install Miniconda or Anaconda:
+https://docs.conda.io/en/latest/miniconda.html
+
+### 2. Clone the repository
+```
+bash
+git clone https://github.com/reflectors02/Amadeus.git
+cd Amadeus
+```
+
+### 3. Create Virtual Enviroment
+```
+conda env create -f environment.yml
+```
+
 **Amadeus – Release Notes (OpenRouter Upgrade) --- 12/9/25**
 
 **New Features**
