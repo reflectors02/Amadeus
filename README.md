@@ -22,6 +22,42 @@ conda env create -f environment.yml
 
 ## Changelogs
 
+Amadeus – Release Notes (OpenRouter Upgrade) — 12/9/25
+
+**New Features**
+
+1. Memory Reset Button
+   Added a memory reset option to clear conversation context when token usage becomes too large.
+   (Chat summarization support planned next.)
+
+2. Return to Home Screen
+   Users can now return to the home screen to:
+   switch API keys
+   reset memory
+   restart sessions cleanly
+
+3. Special Touch Interaction (Live2D)
+   Added a special touch interaction on the Kurisu Live2D model.
+   Triggers a unique animation and an annoyed voice line.
+
+4. Conda Environment Support
+   Added environment.yml to allow easy installation of the required Conda environment.
+
+**Improvements**
+
+1. UI Improvements
+
+2. Improved Amadeus panel visuals
+
+3. Better background assets
+
+4. Larger, more readable fonts
+
+5. Improved Thinking Animations
+   Refined thinking animations for smoother and more expressive behavior.
+
+
+
 ### **Amadeus – Release Notes (OpenRouter Upgrade) --- 12/9/25**
 
 **New Features**
@@ -45,6 +81,7 @@ conda env create -f environment.yml
    txtfiles/api_key.txt
    No need for the user to re-enter the key every session.
 
+![Amadeus UI](Images/12:12.png)
 
 **Improvements**
 
