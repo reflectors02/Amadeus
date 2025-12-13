@@ -22,7 +22,7 @@ conda env create -f environment.yml
 
 ## Changelogs
 
-Amadeus – Release Notes (OpenRouter Upgrade) — 12/9/25
+### Amadeus – Release Notes (Animations + QOL) — 12/12/25
 
 **New Features**
 
