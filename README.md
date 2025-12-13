@@ -19,7 +19,10 @@ cd Amadeus
 conda env create -f environment.yml
 ```
 
-**Amadeus – Release Notes (OpenRouter Upgrade) --- 12/9/25**
+
+## Changelogs
+
+### **Amadeus – Release Notes (OpenRouter Upgrade) --- 12/9/25**
 
 **New Features**
 
