@@ -56,6 +56,11 @@ conda env create -f environment.yml
 5. Improved Thinking Animations
    Refined thinking animations for smoother and more expressive behavior.
 
+![Amadeus UI](Images/12:12.png)
+
+
+
+
 
 
 ### **Amadeus – Release Notes (OpenRouter Upgrade) --- 12/9/25**
@@ -81,7 +86,6 @@ conda env create -f environment.yml
    txtfiles/api_key.txt
    No need for the user to re-enter the key every session.
 
-![Amadeus UI](Images/12:12.png)
 
 **Improvements**
 
