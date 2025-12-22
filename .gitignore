@@ -1,0 +1,32 @@
+# =====================
+# Python / Conda
+# =====================
+__pycache__/
+*.pyc
+.env
+*.env
+
+# =====================
+# Amadeus runtime data
+# =====================
+Amadeus/__pycache__/
+Amadeus/unused_files/
+Amadeus/txtfiles/api_key.txt
+Amadeus/txtfiles/memory.txt
+Amadeus/ttsout/generated.wav
+
+# =====================
+# Logs
+# =====================
+log_*.txt
+
+# =====================
+# GPT-SoVITS (heavy / generated)
+# =====================
+GPT-SoVITS
+
+# =====================
+# OS junk
+# =====================
+.DS_Store
+Thumbs.db

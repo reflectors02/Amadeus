@@ -1,0 +1,8 @@
+# Core
+Flask==3.1.2
+flask-cors==5.0.1
+requests==2.32.5
+tqdm==4.67.1
+
+# Voice client
+gradio_client
