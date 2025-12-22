@@ -44,8 +44,8 @@ cd /d "%SOVITS_DIR%"
 
 REM Run in a separate minimized window; write logs to PROJECT_ROOT
 start "GPT-SoVITS" /min cmd /c ^
-  "conda activate GPTSoVits && python GPT_SoVITS\inference_webui.py > ""%PROJECT_ROOT%\log_sovits.txt"" 2>&1"
-
+  "cd /d ""%SOVITS_DIR%"" && set PYTHONPATH=%SOVITS_DIR% && conda activate GPTSoVits && python GPT_SoVits\inference_webui.py > ""%PROJECT_ROOT%\log_sovits.txt"" 2>&1"
+  
 REM --- Wait for GPT-SoVITS HTTP to respond ---
 echo Waiting for GPT-SoVITS to become ready at %SOVITS_URL% ...
 powershell -NoProfile -Command ^
