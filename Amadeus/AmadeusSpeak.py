@@ -37,20 +37,20 @@ def generateVoice(text: str):
 
     wav_path = client.predict(
         handle_file(str(REF_WAV)),  # ref_wav_path
-        "",                         # prompt_text (leave empty for inference)
+        "ん? ほっと来てくれませんか?ん? ふざけてないでちょっと来てくださいアニカって何ですか?人激の悪い私は", # prompt_text
         "Japanese",                 # prompt_language
         text,                       # text
         "Japanese",                 # text_language
-        "Slice once every 4 sentences",
+        "",
         5,                          # top_k
-        1.0,                        # top_p
+        0.7,                        # top_p
         1.0,                        # temperature
         False,                      # ref_free
         1.0,                        # speed
         False,                      # if_freeze
         [],                         # inp_refs
-        "8",                        # sample_steps
-        False,                      # if_sr
+        "32",                        # sample_steps
+        True,                      # if_sr
         0.3,                        # pause_second
         api_name="/get_tts_wav"
     )
