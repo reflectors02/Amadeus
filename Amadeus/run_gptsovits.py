@@ -26,6 +26,8 @@ def main():
     # GPT-SoVITS expects to run from repo root
     os.chdir(GPT_ROOT)
 
+    print("[Amadeus] Starting GPT-SoVITS via Python entrypoint...")
+
     # Run script
     runpy.run_path(str(GPT_PKG / "inference_webui.py"), run_name="__main__")
 
