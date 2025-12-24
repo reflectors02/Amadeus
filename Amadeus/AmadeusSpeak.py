@@ -3,6 +3,7 @@ import platform
 from pathlib import Path
 from gradio_client import Client, handle_file
 
+#NOTES: Make sure we're running the flask server from within the Amadeus directory, or else this will break! 
 
 REF_WAV = Path("ttsout/kurisu10s.wav").resolve()
 OUT_WAV = Path("ttsout/generated.wav").resolve()
@@ -52,7 +53,7 @@ def generateVoice(text: str):
         1.0,                        # speed
         False,                      # if_freeze
         [],                         # inp_refs
-        32,                        # sample_steps
+        16,                        # sample_steps
         True,                      # if_sr
         0.3,                        # pause_second
         api_name="/get_tts_wav"

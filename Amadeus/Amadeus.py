@@ -8,6 +8,9 @@ LLM_Model = store.load_llm_model(default_model=default_LLM_Model)
 default_personality = store.load_default_personality_messages()
 
 
+#pre: The intended new_model is a string e.g., "deepseek/deepseek-v3.2-exp"
+#post: global LLM_Model should be changed to new_model
+#      LLM_Model.txt should be updated accordingly, to store the latest model the user chose.
 def setLLMModel(new_model: str):
     global LLM_Model
     LLM_Model = new_model.strip()
@@ -15,11 +18,17 @@ def setLLMModel(new_model: str):
     print("[Amadeus] Model changed to " + LLM_Model)
 
 
+#pre:
+#post: If LLM_Model is empty, return an Error message
+#      else, return the LLM Model e.g., "deepseek/deepseek-v3.2-exp"
 def getLLMModel():
     global LLM_Model
     return LLM_Model.strip() if LLM_Model else "No Model Selected."
 
 
+#pre: key_string is a string in the format: "sk-or-v1-566...."
+#post: API_KEY set to key_string
+#      API_Key.txt should also be updated accordingly.
 def setKey(key_string: str):
     global API_KEY
     API_KEY = key_string.strip()
@@ -27,6 +36,8 @@ def setKey(key_string: str):
     print(f"[Amadeus] API key set: {API_KEY[:5]}...")
 
 
+#pre:
+#post: memory.json should be erased
 def resetMemory():
     store.reset_memory()
     print("[Amadeus] Memory Reset!")
