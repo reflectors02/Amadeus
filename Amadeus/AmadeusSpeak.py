@@ -19,18 +19,21 @@ def _get_client():
     if _client is None:
         _client = Client(GPTSOVITS_URL)
 
-        # REQUIRED once (UI does this automatically)
+        # optional; fine to keep
         _client.predict(api_name="/change_choices")
+
+        # ✅ Force SoVITS v4 by direct path
         _client.predict(
-            "Use v2 base model directly without training!",
+            "GPT_SoVITS/pretrained_models/gsv-v4-pretrained/s2Gv4.pth",
             api_name="/change_sovits_weights"
         )
+
+        # ✅ Keep GPT v3 preset if that’s what your UI supports
         _client.predict(
-            "Use v2 base model directly without training!",
+            "Use v3 base model directly without training!",
             api_name="/change_gpt_weights"
         )
     return _client
-
 
 def generateVoice(text: str):
     client = _get_client()
@@ -49,7 +52,7 @@ def generateVoice(text: str):
         1.0,                        # speed
         False,                      # if_freeze
         [],                         # inp_refs
-        "32",                        # sample_steps
+        32,                        # sample_steps
         True,                      # if_sr
         0.3,                        # pause_second
         api_name="/get_tts_wav"
