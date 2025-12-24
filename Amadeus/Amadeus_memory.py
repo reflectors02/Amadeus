@@ -30,6 +30,7 @@ def save_api_key(key: str) -> None:
 
 # ---------- MODEL ----------
 def load_llm_model(default_model: str = DEFAULT_LLM_MODEL) -> str:
+    _ensure_file(PATH_TO_LLM_MODEL, default_text="")
     with open(PATH_TO_LLM_MODEL, "r", encoding="utf-8") as f:
         model = f.read().strip()
     return model or default_model
@@ -43,6 +44,7 @@ def save_llm_model(model: str) -> None:
 
 # ---------- PERSONALITY ----------
 def load_personality() -> str:
+    _ensure_file(PATH_TO_PERSONALITY, default_text="")
     with open(PATH_TO_PERSONALITY, "r", encoding="utf-8") as f:
         return f.read()
 
