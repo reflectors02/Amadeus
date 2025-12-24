@@ -6,7 +6,7 @@ default_LLM_Model = store.DEFAULT_LLM_MODEL
 API_KEY = store.load_api_key()
 LLM_Model = store.load_llm_model(default_model=default_LLM_Model)
 default_personality = store.load_default_personality_messages()
-
+translation_instructions = store.load_translation_instructions()
 
 #pre: The intended new_model is a string e.g., "deepseek/deepseek-v3.2-exp"
 #post: global LLM_Model should be changed to new_model
@@ -73,7 +73,7 @@ def getTranslation(assistant_reply: str):
         },
         json={
             "model": default_LLM_Model,
-            "messages": [{"role" : "system", "content": "Translate the user's text into natural Japanese for TTS. Output ONLY the spoken dialogue text. No actions, no narration, no brackets, no asterisks."}] + [{"role": "user", "content" : assistant_reply}],
+            "messages": [{"role" : "system", "content": translation_instructions}] + [{"role": "user", "content" : assistant_reply}],
         },
     )
     data = resp.json()
