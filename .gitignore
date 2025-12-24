@@ -12,7 +12,7 @@ __pycache__/
 Amadeus/__pycache__/
 Amadeus/unused_files/
 Amadeus/txtfiles/api_key.txt
-Amadeus/txtfiles/memory.txt
+Amadeus/txtfiles/memory.json
 Amadeus/ttsout/generated.wav
 
 # =====================

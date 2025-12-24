@@ -1,110 +1,36 @@
 import requests
 import os
+import Amadeus_memory as store
 
-PATH_TO_MEMORY = "txtfiles/memory.txt"
-PATH_TO_PERSONALITY = "txtfiles/personality.txt"
-PATH_TO_API_KEY = "txtfiles/api_key.txt"
-PATH_TO_LLM_MODEL = "txtfiles/LLM_Model.txt"
+default_LLM_Model = store.DEFAULT_LLM_MODEL
+API_KEY = store.load_api_key()
+LLM_Model = store.load_llm_model(default_model=default_LLM_Model)
+default_personality = store.load_default_personality_messages()
 
-API_KEY = ""
-personality = ""
-memories = []
-LLM_Model = ""
-default_LLM_Model = "deepseek/deepseek-v3.2-exp"
 
-with open(PATH_TO_PERSONALITY, "r") as personalityFile:
-    personality = personalityFile.read()
-default_personality = [{"role" : "system", "content": personality}]
-
-#pre: The intended new_model is a string e.g., "deepseek/deepseek-v3.2-exp"
-#post: global LLM_Model should be changed to new_model
-#      LLM_Model.txt should be updated accordingly, to store the latest model the user chose.
-def setLLMModel(new_model):
+def setLLMModel(new_model: str):
     global LLM_Model
     LLM_Model = new_model.strip()
-    print("[Amadeus] Model changed to " + new_model)
+    store.save_llm_model(LLM_Model)
+    print("[Amadeus] Model changed to " + LLM_Model)
 
-    with open(PATH_TO_LLM_MODEL, 'w') as LLMFile:
-        LLMFile.write(LLM_Model)
 
-#pre:
-#post: If LLM_Model is empty, return an Error message
-#      else, return the LLM Model e.g., "deepseek/deepseek-v3.2-exp"
 def getLLMModel():
     global LLM_Model
-    if LLM_Model:
-        return LLM_Model.strip()
-    return "No Model Selected."
+    return LLM_Model.strip() if LLM_Model else "No Model Selected."
 
-#pre: key_string is a string in the format: "sk-or-v1-566...."
-#post: API_KEY set to key_string
-#      API_Key.txt should also be updated accordingly.
-def setKey(key_string):
-    global API_KEY 
+
+def setKey(key_string: str):
+    global API_KEY
     API_KEY = key_string.strip()
-
-    with open(PATH_TO_API_KEY, "w") as f:
-        f.write(API_KEY)   
-
+    store.save_api_key(API_KEY)
     print(f"[Amadeus] API key set: {API_KEY[:5]}...")
 
-# Pre:
-#   PATH_TO_MEMORY is a valid filesystem path.
-# Post:
-#   - Ensures PATH_TO_MEMORY exists (creates empty file if missing).
-#   - Returns a Python list representing the stored conversation memory.
-#   - Returns [] if the memory file is empty.
-def getMemory():
-    if not os.path.exists(PATH_TO_MEMORY):
-        with open(PATH_TO_MEMORY, 'w') as f:
-            pass
 
-    with open(PATH_TO_MEMORY, "r") as memoryFile:
-        data = memoryFile.read().strip()
-        if not data:
-            return []
-        else:
-            return eval(data)
-
-#pre: context represents the new memory, it is in a JSON format.
-#post: Overwrite memory.txt with context.
-def updateMemory(context):
-    with open(PATH_TO_MEMORY, "w") as file:
-        file.write(str(context))
-
-#pre:
-#post: memory.txt should be set to nothing.
 def resetMemory():
-    with open(PATH_TO_MEMORY, "w") as file:
-        file.write("")
-        print("[Amadeus] Memory Reset!")
+    store.reset_memory()
+    print("[Amadeus] Memory Reset!")
 
-
-### Initiating default Global variables:
-
-#pre:
-#post: set key to whatever the file has, if files doesn't exist, then make one as empty
-if not os.path.exists(PATH_TO_API_KEY):
-    with open(PATH_TO_API_KEY, 'w') as f:
-        pass
-
-with open(PATH_TO_API_KEY, "r") as apikeyFile:
-     trial_api_key = apikeyFile.read().strip()
-     if trial_api_key:
-        setKey(trial_api_key)
-
-#pre:  LLM_Model.txt MUST exist!
-#post: Set global LLM_Model to whatever is in LLM_Model.txt
-#      If is empty, then set to default model. It should also update the LLM_Model.txt
-with open(PATH_TO_LLM_MODEL, 'r') as initModelFile:
-    initModel = initModelFile.read().strip()
-    if initModel:
-        setLLMModel(initModel)
-    else:
-        setLLMModel(default_LLM_Model)
-
-
-### Main logic
 
 #pre: message_context is a JSON format
 #post: returns string of ONLY the response from openrouter e.g., "Hello from deepseek!"
@@ -127,7 +53,7 @@ def getResponse(message_context):
 #pre: English text is passed in as assistant_reply e.g., "Hello from deepseek! *happyface*"
 #post: Assistant_reply should be translated into Japanese, only the word parts of it. e.g., "JPS(Hello from deepseeK!)" 
 #      Without the *happyface*
-def getTranslation(assistant_reply):
+def getTranslation(assistant_reply: str):
     resp = requests.post(
         "https://openrouter.ai/api/v1/chat/completions",
         headers={
@@ -145,12 +71,12 @@ def getTranslation(assistant_reply):
 
 #pre: user_input e.g., "Testing!"
 #post: returns a english response from openrouter e.g., "Hello from deepseek!", updates memory.txt.
-def getOutput(user_message):
-    context = getMemory()
-    context.append({"role": "user", "content": user_message})
+def getOutput(user_message: str):
+    store.append_message("user", user_message)
+    context = store.load_memory()[-80:]
     assistant_reply = getResponse(context)
-    context.append({"role": "assistant", "content": assistant_reply})
-    updateMemory(context)
+    store.append_message("assistant", assistant_reply)
     return assistant_reply
+
 
 
