@@ -1,9 +1,10 @@
 import os
 import json
 from typing import List, Dict
+import sqlite3
 
 TXT_DIR = "txtfiles"
-PATH_TO_MEMORY = os.path.join(TXT_DIR, "memory.json")
+PATH_TO_MEMORY = os.path.join(TXT_DIR, "memory.db")
 PATH_TO_PERSONALITY = os.path.join(TXT_DIR, "personality.txt")
 PATH_TO_API_KEY = os.path.join(TXT_DIR, "api_key.txt")
 PATH_TO_LLM_MODEL = os.path.join(TXT_DIR, "LLM_Model.txt")
@@ -17,7 +18,7 @@ def _ensure_file(path: str, default_text: str = "") -> None:
         with open(path, "w", encoding="utf-8") as f:
             f.write(default_text)
 
-# ---------- API KEY ----------
+# ---------- API KEY ---------- (NO SQL)
 def load_api_key() -> str:
     _ensure_file(PATH_TO_API_KEY, default_text="")
     with open(PATH_TO_API_KEY, "r", encoding="utf-8") as f:
@@ -29,7 +30,7 @@ def save_api_key(key: str) -> None:
 
 
 
-# ---------- MODEL ----------
+# ---------- MODEL ---------- (NO SQL)
 def load_llm_model(default_model: str = DEFAULT_LLM_MODEL) -> str:
     _ensure_file(PATH_TO_LLM_MODEL, default_text="")
     with open(PATH_TO_LLM_MODEL, "r", encoding="utf-8") as f:
@@ -43,7 +44,7 @@ def save_llm_model(model: str) -> None:
 
 
 
-# ---------- PERSONALITY ----------
+# ---------- PERSONALITY ---------- (NO SQL)
 def load_personality() -> str:
     _ensure_file(PATH_TO_PERSONALITY, default_text="")
     with open(PATH_TO_PERSONALITY, "r", encoding="utf-8") as f:
@@ -57,7 +58,7 @@ def load_default_personality_messages() -> List[Dict[str, str]]:
     return [{"role": "system", "content": personality}]
 
 
-# ---------- Additional Instructions ----------
+# ---------- Additional Instructions ---------- (NO SQL)
 
 def load_translation_instructions() -> str:
     _ensure_file(PATH_TO_TRANSLATION_INSTRUCTIONS)
@@ -65,34 +66,59 @@ def load_translation_instructions() -> str:
         return f.read()
 
 
-# ---------- MEMORY (JSON list of messages) ----------
+# ---------- MEMORY (JSON list of messages) ---------- (SQL)
+
+def _ensure_messages_table(c: sqlite3.Cursor) -> None:
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            role TEXT,
+            content TEXT
+        )
+    """)
+
+#pre:
+#post: Return ALL previous messages in a LIST of Jsons. e.g., [{"role": "user", "content": "kurisu"}....]
+#      If file does not exist, make one and return []
 def load_memory() -> List[Dict[str, str]]:
-    _ensure_file(PATH_TO_MEMORY, default_text="[]")
-    with open(PATH_TO_MEMORY, "r", encoding="utf-8") as f:
-        raw = f.read().strip()
-        if not raw:
-            return []
-        try:
-            data = json.loads(raw)
-            if isinstance(data, list):
-                return data
-            return []
-        except json.JSONDecodeError:
-            # If the file got corrupted, fail safe instead of crashing
-            return []
+    conn = sqlite3.connect(PATH_TO_MEMORY)
+    c = conn.cursor()
 
-def save_memory(messages: List[Dict[str, str]]) -> None:
-    with open(PATH_TO_MEMORY, "w", encoding="utf-8") as f:
-        json.dump(messages, f, ensure_ascii=False)
+    _ensure_messages_table(c)
+    conn.commit()
 
 
-def append_message(role: str, content: str) -> None:
-    messages = load_memory()
-    messages.append({"role": role, "content": content})
-    save_memory(messages)
+    c.execute("SELECT role, content FROM messages ORDER BY id ASC")
+    rows = c.fetchall()
 
+    conn.close()
+    return [{"role": role, "content": content} for role, content in rows]
 
+# pre: role is a string (e.g., "user", "assistant"), content is a string
+# post: a new row is inserted into messages with a correct auto-incremented id
+def append_message(_role: str, _content: str) -> None:
+    conn = sqlite3.connect(PATH_TO_MEMORY)
+    c = conn.cursor()
+    _ensure_messages_table(c)
+
+    c.execute(
+        "INSERT INTO messages (role, content) VALUES (?, ?)",
+        (_role, _content)
+    )
+
+    conn.commit()
+    conn.close()
+
+# pre: SQLite database may exist or not; messages table may contain any number of rows
+# post: all rows in messages are deleted; table and schema remain intact; future inserts still work
 def reset_memory() -> None:
-    save_memory([])
+    conn = sqlite3.connect(PATH_TO_MEMORY)
+    c = conn.cursor()
+    _ensure_messages_table(c)
+
+    c.execute("DELETE FROM messages")
+
+    conn.commit()
+    conn.close()
 
 

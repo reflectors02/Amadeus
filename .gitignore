@@ -14,6 +14,8 @@ Amadeus/unused_files/
 Amadeus/txtfiles/api_key.txt
 Amadeus/txtfiles/memory.json
 Amadeus/ttsout/generated.wav
+Amadeus/txtfiles/memory.db
+
 
 # =====================
 # Logs
@@ -30,3 +32,7 @@ GPT-SoVITS
 # =====================
 .DS_Store
 Thumbs.db
+
+
+#other:
+UsefulInfo
