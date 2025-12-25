@@ -93,14 +93,14 @@ def getOutput(user_message: str):
 
 #-----DO NOT TOUCH, FOR DEV ONLY-----
 
-from datetime import datetime, timezone
-print("OS local:", datetime.now().astimezone().isoformat())
-print("UTC     :", datetime.now(timezone.utc).isoformat())
-exit = False
-while(exit != True):
-    user_message = input("Enter msg")
-    if(user_message == "No"):
-        exit = True
-        break
+# from datetime import datetime, timezone
+# print("OS local:", datetime.now().astimezone().isoformat())
+# print("UTC     :", datetime.now(timezone.utc).isoformat())
+# exit = False
+# while(exit != True):
+#     user_message = input("Enter msg")
+#     if(user_message == "No"):
+#         exit = True
+#         break
 
-    getOutput(user_message)
+#     getOutput(user_message)

@@ -7,6 +7,7 @@ from gradio_client import Client, handle_file
 
 REF_WAV = Path("ttsout/kurisu10s.wav").resolve()
 OUT_WAV = Path("ttsout/generated.wav").resolve()
+REF_TXT = "ん? ほっと来てくれませんか?ん? ふざけてないでちょっと来てくださいアニカって何ですか?人激の悪い私は"
 
 # ======================
 # GPT-SoVITS server
@@ -42,7 +43,7 @@ def generateVoice(text: str):
 
     wav_path = client.predict(
         handle_file(str(REF_WAV)),  # ref_wav_path
-        "ん? ほっと来てくれませんか?ん? ふざけてないでちょっと来てくださいアニカって何ですか?人激の悪い私は", # prompt_text
+        REF_TXT, # prompt_text
         "Japanese",                 # prompt_language
         text,                       # text
         "Japanese",                 # text_language
