@@ -58,7 +58,7 @@ def getResponse(message_context):
         },
     )
     data = resp.json()
-    print("[Amadeus]: " + data["choices"][0]["message"]["content"])
+    print("[Amadeus]: ENG:" + data["choices"][0]["message"]["content"])
     return data["choices"][0]["message"]["content"]
 
 #pre: English text is passed in as assistant_reply e.g., "Hello from deepseek! *happyface*"
@@ -77,7 +77,7 @@ def getTranslation(assistant_reply: str):
         },
     )
     data = resp.json()
-    print("[Amadeus]: " + data["choices"][0]["message"]["content"])
+    print("[Amadeus]: JPS: " + data["choices"][0]["message"]["content"])
     return data["choices"][0]["message"]["content"]
 
 #pre: user_input e.g., "Testing!"

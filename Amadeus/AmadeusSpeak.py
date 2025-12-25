@@ -23,18 +23,19 @@ def _get_client():
         # optional; fine to keep
         _client.predict(api_name="/change_choices")
 
-        # ✅ Force SoVITS v4 by direct path
+        # Force SoVITS v4 by direct path
         _client.predict(
             "GPT_SoVITS/pretrained_models/gsv-v4-pretrained/s2Gv4.pth",
             api_name="/change_sovits_weights"
         )
 
-        # ✅ Keep GPT v3 preset if that’s what your UI supports
+        # Keep GPT v3 preset if that’s what your UI supports
         _client.predict(
             "Use v3 base model directly without training!",
             api_name="/change_gpt_weights"
         )
     return _client
+
 
 def generateVoice(text: str):
     client = _get_client()
@@ -55,7 +56,7 @@ def generateVoice(text: str):
         [],                         # inp_refs
         16,                        # sample_steps
         True,                      # if_sr
-        0.2,                        # pause_second
+        0.1,                        # pause_second
         api_name="/get_tts_wav"
     )
 
@@ -96,6 +97,8 @@ def play_sound():
 
 #This breaks stuff!
 #generateVoice("あら、今日はずいぶんせっついてくるのね。えっと、まず研究所に寄ってもいいわ。マユリが最近の裁縫作品を見せたいって言ってたから。そのあとで、少し休憩しましょう。")
+#generateVoice("あんた…！なんでいつも私が仕事に集中してる時にそんなこと言うのよ…？私だって、会いたかったんだからね…これで満足")
+generateVoice("その…神経科学の論文は残ってるんだけど…でも…一本くらいなら…変な映画はやめてね、わかった？")
 
 #This does not breaks stuff! 
 #generateVoice("あら、今日はずいぶんせっついてくるのね。えっと、まず研究所に寄ってもいいわ。マユリが最近の裁縫作品を見せたいって言ってたから。そのあとで少し休憩しましょう。")
