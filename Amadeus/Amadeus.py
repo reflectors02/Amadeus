@@ -43,7 +43,7 @@ def resetMemory():
     print("[Amadeus] Memory Reset!")
 
 
-#pre: message_context is a JSON format
+#pre: message_context is a List[Dict[str, str]] where each dict has keys role and content.
 #post: returns string of ONLY the response from openrouter e.g., "Hello from deepseek!"
 def getResponse(message_context):
     resp = requests.post(
@@ -54,7 +54,7 @@ def getResponse(message_context):
         },
         json={
             "model": LLM_Model,
-            "messages": default_personality + message_context,
+            "messages": default_personality + [store.load_internal_context()] + message_context,
         },
     )
     data = resp.json()
@@ -84,10 +84,23 @@ def getTranslation(assistant_reply: str):
 #post: returns a english response from openrouter e.g., "Hello from deepseek!", updates memory.txt.
 def getOutput(user_message: str):
     store.append_message("user", user_message)
-    context = store.load_memory()[-80:]
+    context = store.build_prompt_messages()[-80:]
     assistant_reply = getResponse(context)
     store.append_message("assistant", assistant_reply)
     return assistant_reply
 
 
 
+#-----DO NOT TOUCH, FOR DEV ONLY-----
+
+from datetime import datetime, timezone
+print("OS local:", datetime.now().astimezone().isoformat())
+print("UTC     :", datetime.now(timezone.utc).isoformat())
+exit = False
+while(exit != True):
+    user_message = input("Enter msg")
+    if(user_message == "No"):
+        exit = True
+        break
+
+    getOutput(user_message)
