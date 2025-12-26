@@ -71,7 +71,49 @@ pip uninstall -y torch torchvision torchaudio
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121```
 ``` 
 
-### 5. Launch Procedures
+
+### 5. Download required pretrained_models from huggingface
+
+```
+# This step requires Git LFS. If you don't have it, run: 'git lfs install'
+
+conda activate GPTSoVITS
+cd Amadeus-Project/GPT-SoVITS/GPT_SoVITS
+
+git lfs install
+git clone https://huggingface.co/lj1995/GPT-SoVITS
+
+(This is a 5gb download! It will take a while)
+
+
+Repo Check: Make sure the pretrained_models looks like this
+
+Amadeus-Project/
+├── Amadeus/
+│   ├── main.py
+│   └── run_gptsovits.py
+├── GPT-SoVITS/
+│   ├── GPT_SoVITS/
+│   │   └── pretrained_models/
+│   │       ├── chinese-hubert-base/
+│   │       ├── chinese-roberta-wwm-ext-large/
+│   │       ├── fast_langdetect/
+│   │       ├── gsv-v2final-pretrained/
+│   │       ├── gsv-v4-pretrained/
+│   │       ├── models--nvidia--bigvgan_v2_24khz_100band_256x/
+│   │       ├── s1bert25hz-2kh-longer-epoch.ckpt
+│   │       ├── s1v3.ckpt
+│   │       ├── s2D488k.pth
+│   │       ├── s2G488k.pth
+│   │       └── s2Gv3.pth
+└── Builds/
+    ├── Amadeus_UI.exe (Windows)
+    └── Amadeus_UI.app (Mac)
+
+
+```
+
+### 6. Launch Procedures
 ```
 #Note: This procedure will require the use of two terminal windows (Anaconda Prompt), so open two
 
@@ -100,7 +142,10 @@ WINDOWS: Run Amadeus-Project/Builds/Amadeus_UI.exe/Amadeus.exe
 Rule of thumb: This is a general guide that should work for most systems. I cannot possibly take care of every possibe scenario. If you encounter any issues not listed here, just ask chatgpt. 
 ```
 
-
+### 7. Commonly encountered issues
+```
+TO BE DONE, NO USERS CURRENTLY
+```
 
 ## Changelogs
 
