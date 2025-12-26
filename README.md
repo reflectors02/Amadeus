@@ -81,7 +81,7 @@ cd Amadeus-Project/GPT-SoVITS/GPT_SoVITS
 git lfs install
 git clone https://huggingface.co/lj1995/GPT-SoVITS
 
-(This is a 10gb download! It will take a while)
+(This is a 5gb download! It will take a while)
 
 After installing it, drag the contents into GPT_SoVITS/pretrained_models
 Then delete the empty folder
