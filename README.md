@@ -1,7 +1,5 @@
 # Amadeus
-## Setup (Conda Recommended)
-
-This project uses a Conda environment.
+## Installation (Conda Recommended)
 
 ### 1. Install Conda
 Install Anaconda:
@@ -68,7 +66,7 @@ conda activate GPTSoVits
 pip uninstall -y torch torchvision torchaudio
 
 # install CUDA-enabled torch (Windows)
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121```
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ``` 
 
 
@@ -83,7 +81,7 @@ cd Amadeus-Project/GPT-SoVITS/GPT_SoVITS
 git lfs install
 git clone https://huggingface.co/lj1995/GPT-SoVITS
 
-(This is a 5gb download! It will take a while)
+(This is a 10gb download! It will take a while)
 
 After installing it, drag the contents into GPT_SoVITS/pretrained_models
 Then delete the empty folder
@@ -166,7 +164,5 @@ TO BE DONE, NO USERS CURRENTLY
 3. Unity ↔ Flask Model API
    Implemented /setLLMModel and /getCurrLLMModel endpoints.
    Enables clean, stateless communication between the Unity frontend and Python backend.
-
-![Amadeus UI](Images/1220.png)
 
 
