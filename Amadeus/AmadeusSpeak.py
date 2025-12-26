@@ -57,7 +57,7 @@ def generateVoice(text: str):
         [],                         # inp_refs
         16,                        # sample_steps
         True,                      # if_sr
-        0.1,                        # pause_second
+        0.3,                        # pause_second
         api_name="/get_tts_wav"
     )
 
@@ -100,6 +100,6 @@ def play_sound():
 #generateVoice("あら、今日はずいぶんせっついてくるのね。えっと、まず研究所に寄ってもいいわ。マユリが最近の裁縫作品を見せたいって言ってたから。そのあとで、少し休憩しましょう。")
 #generateVoice("あんた…！なんでいつも私が仕事に集中してる時にそんなこと言うのよ…？私だって、会いたかったんだからね…これで満足")
 #generateVoice("その…神経科学の論文は残ってるんだけど…でも…一本くらいなら…変な映画はやめてね、わかった？")
-
+#プロジェクトは待てるけど、睡眠は待てないよ。電源を切らせないでくれよ。
 #This does not breaks stuff! 
 #generateVoice("あら、今日はずいぶんせっついてくるのね。えっと、まず研究所に寄ってもいいわ。マユリが最近の裁縫作品を見せたいって言ってたから。そのあとで少し休憩しましょう。")

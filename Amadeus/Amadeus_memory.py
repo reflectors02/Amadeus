@@ -65,15 +65,16 @@ def load_translation_instructions() -> str:
     _ensure_file(PATH_TO_TRANSLATION_INSTRUCTIONS)
     with open(PATH_TO_TRANSLATION_INSTRUCTIONS, "r", encoding="utf-8") as f:
         return f.read()
-        
+
 
 # pre: memory database may exist or not; messages table may be empty or populated
 # post: returns a single system message containing derived internal context
 #       (e.g., current local time, recency of last user message);
 #       does not modify memory and must not be revealed or echoed by the model
+#       CURRENT TIME MUST BE IN MILITARY TIME e.g., 23:00
 def load_internal_context() -> Dict[str, str]:
     now_local = datetime.now().astimezone()
-    now_str = now_local.strftime("%I:%M %p")
+    now_str = now_local.strftime("%H:%M")
 
     raw = load_memory_raw()
 
