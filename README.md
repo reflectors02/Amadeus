@@ -1,6 +1,9 @@
 # Amadeus
 ## Installation (Conda Recommended)
 
+### 0. Installation Guide:
+https://youtu.be/oP2qLuUpaIg?si=8uIv3EHKS_ntbyRU
+
 ### 1. Install Conda
 Install Anaconda:
 https://www.anaconda.com/
