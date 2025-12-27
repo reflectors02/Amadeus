@@ -146,9 +146,50 @@ Rule of thumb: This is a general guide that should work for most systems. I cann
 ```
 
 ### 7. Commonly encountered issues
+1. "Error: Your local changes would be overwritten" If you have modified any files and git pull fails, run this command to reset your local files to match the online version (Warning: this deletes your local code changes):
 ```
-TO BE DONE, NO USERS CURRENTLY
+git reset --hard origin/main
+git pull origin main
 ```
+
+2. App won't launch after update? If the app crashes or behaves strangely immediately after an update, your database schema might be outdated. Reset your memory by deleting the database file: 
+[!WARNING] THIS WILL DELETE YOUR AI GIRLFRIEND'S MEMORIES. If you want to keep them, make a copy of the file first and try to convert it to the new format later.
+```
+cd Amadeus-Project/Amadeus/txtfiles
+del memory.db
+```
+3. Dependency Errors? If new features were added, you might need to update your environments:
+```
+# Update Amadeus env
+conda env update -f environment.yml --prune
+
+# Update GPT-SoVITS env
+conda activate GPTSoVits
+pip install -r requirements.txt
+```
+
+
+### 8. Updating the Project
+
+
+The project does not update automatically. To get the latest features and bug fixes, you must manually pull updates for both the main project and its dependencies.
+
+#### Standard Update
+Run these commands in your Anaconda Prompt:
+
+```
+cd Amadeus-Project
+
+# 1. Update the main Amadeus files
+git pull origin main
+
+# 2. Update the GPT-SoVITS dependency (IF GPTSoVITS has updated)
+cd GPT-SoVITS
+git pull origin main
+```
+
+
+
 
 ## Changelogs
 
