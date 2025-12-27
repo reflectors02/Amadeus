@@ -145,7 +145,7 @@ WINDOWS: Run Amadeus-Project/Builds/Amadeus_UI.exe/Amadeus.exe
 Rule of thumb: This is a general guide that should work for most systems. I cannot possibly take care of every possibe scenario. If you encounter any issues not listed here, just ask chatgpt. 
 ```
 
-### 7. Commonly encountered issues
+## Commonly encountered issues
 1. "Error: Your local changes would be overwritten" If you have modified any files and git pull fails, run this command to reset your local files to match the online version (Warning: this deletes your local code changes):
 ```
 git reset --hard origin/main
@@ -169,7 +169,7 @@ pip install -r requirements.txt
 ```
 
 
-### 8. Updating the Project
+## Updating the Project
 
 
 The project does not update automatically. To get the latest features and bug fixes, you must manually pull updates for both the main project and its dependencies.
