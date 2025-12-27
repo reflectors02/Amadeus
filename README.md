@@ -8,6 +8,12 @@ https://youtu.be/oP2qLuUpaIg?si=8uIv3EHKS_ntbyRU
 Install Anaconda:
 https://www.anaconda.com/
 
+Install VS Tools:
+https://visualstudio.microsoft.com/downloads/?q=build+tools
+
+- Scroll down to you see Tools for Visual Studio
+- Download Build Tools for Visual Studio 2026
+
 
 ### 2. Clone the repository(s)
 ```
@@ -79,14 +85,16 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 # This step requires Git LFS. If you don't have it, run: 'git lfs install'
 
 conda activate GPTSoVITS
-cd Amadeus-Project/GPT-SoVITS/GPT_SoVITS
+cd Desktop
 
 git lfs install
 git clone https://huggingface.co/lj1995/GPT-SoVITS
 
+rename the folder to something else like "DOWNLOADEDMODELS"
+
 (This is a 5gb download! It will take a while)
 
-After installing it, drag the contents into GPT_SoVITS/pretrained_models
+After installing it, drag the contents into Amadeus-Project/GPT-SoVITS/GPT_SoVITS/pretrained_models
 Then delete the empty folder
 
 Repo Check: Make sure the pretrained_models looks like this
@@ -170,7 +178,7 @@ git pull origin main
 ```
 
 2. App won't launch after update? If the app crashes or behaves strangely immediately after an update, your database schema might be outdated. Reset your memory by deleting the database file:
- 
+
 [!WARNING] THIS WILL DELETE YOUR AI GIRLFRIEND'S MEMORIES. If you want to keep them, make a copy of the file first and try to convert it to the new format later.
 ```
 cd Amadeus-Project/Amadeus/txtfiles
