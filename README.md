@@ -169,7 +169,8 @@ git reset --hard origin/main
 git pull origin main
 ```
 
-2. App won't launch after update? If the app crashes or behaves strangely immediately after an update, your database schema might be outdated. Reset your memory by deleting the database file: 
+2. App won't launch after update? If the app crashes or behaves strangely immediately after an update, your database schema might be outdated. Reset your memory by deleting the database file:
+ 
 [!WARNING] THIS WILL DELETE YOUR AI GIRLFRIEND'S MEMORIES. If you want to keep them, make a copy of the file first and try to convert it to the new format later.
 ```
 cd Amadeus-Project/Amadeus/txtfiles
