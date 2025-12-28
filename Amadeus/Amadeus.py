@@ -43,6 +43,12 @@ def resetMemory():
     print("[Amadeus] Memory Reset!")
 
 
+#pre:
+#post: returns a dict of JSON e.g., [{"role": "user", "content": "kurisu"....}....]
+def get_raw_memory():
+    return store.load_memory_raw()
+
+
 #pre: message_context is a List[Dict[str, str]] where each dict has keys role and content.
 #post: returns string of ONLY the response from openrouter e.g., "Hello from deepseek!"
 def getResponse(message_context):
@@ -72,7 +78,7 @@ def getTranslation(assistant_reply: str):
             "Content-Type": "application/json",
         },
         json={
-            "model": default_LLM_Model,
+            "model": LLM_Model,
             "messages": [{"role" : "system", "content": translation_instructions}] + [{"role": "user", "content" : assistant_reply}],
         },
     )

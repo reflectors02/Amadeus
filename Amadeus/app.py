@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from Amadeus import getOutput, getTranslation, setKey, resetMemory, setLLMModel, getLLMModel
+from Amadeus import getOutput, getTranslation, setKey, resetMemory, setLLMModel, getLLMModel, get_raw_memory
 from AmadeusSpeak import generateVoice, play_sound
 from flask_cors import CORS
 import threading
@@ -52,3 +52,7 @@ def getCurrLLMModel():
         return jsonify({"status": "error", "message": "No Model Selected"}), 400
 
 
+@application.route("/getMemory", methods=["POST"])
+def getMemory():
+    msgs = get_raw_memory()
+    return jsonify({"status":"ok","messages": msgs})
