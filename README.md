@@ -163,7 +163,13 @@ Run these commands in your Anaconda Prompt:
 cd Amadeus-Project
 
 # 1. Update the main Amadeus files
+cd Amadeus-Project
 git pull origin main
+
+conda activate Amadeus
+cd Amadeus 
+conda env update -f environment.yml --prune
+
 
 # 2. Update the GPT-SoVITS dependency (IF GPTSoVITS has updated)
 cd GPT-SoVITS
