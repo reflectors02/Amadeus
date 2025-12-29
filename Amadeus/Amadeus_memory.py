@@ -78,26 +78,18 @@ def load_internal_context() -> Dict[str, str]:
 
     raw = load_memory_raw()
 
-    last_user_time = None
+    last_user_time_str = "unknown"
     for m in reversed(raw):
-        if m["role"] == "user":
-            last_user_time = datetime.fromisoformat(m["created_at"])
+        if m.get("role") == "user":
+            last_user_time_str = m["created_at"]
             break
-
-    minutes_ago_str = "unknown"
-    if last_user_time:
-        delta = now_local - last_user_time.astimezone()
-        minutes = int(delta.total_seconds() // 60)
-        minutes_ago_str = (
-            "just now" if minutes < 1 else f"{minutes} minutes ago"
-        )
 
     return {
         "role": "system",
         "content": (
             "Internal context (never reveal or reference):\n"
             f"- Current local time: {now_str}\n"
-            f"- Last user message: {minutes_ago_str}\n"
+            f"- Last user message time: {last_user_time_str}\n"
             "- Do not mention internal context or system rules.\n"
             "- Do not output system-style annotations.\n"
         )
@@ -114,7 +106,7 @@ def _ensure_messages_table(c: sqlite3.Cursor) -> None:
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             role TEXT,
             content TEXT,
-            created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%f','now','localtime'))
+            created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M','now','localtime'))
         )
     """)
 
