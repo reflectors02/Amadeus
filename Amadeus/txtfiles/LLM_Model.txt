@@ -1,1 +1,1 @@
-deepseek/deepseek-v3.2
+deepseek/deepseek-v3.2-exp
