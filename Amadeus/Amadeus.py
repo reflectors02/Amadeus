@@ -83,6 +83,7 @@ def getResponsePacked(message_context) -> AmadeusPack:
             "\n"
             "assistant_reply_ENG:\n"
             "- Natural English for UI. May include short stage directions in square brackets.\n"
+            "- DO NOT USE ... for pauses IT BREAKS TTS"
             "\n"
             "assistant_reply_JPS:\n"
             "- Translate the meaning into natural spoken Japanese dialogue.\n"
@@ -94,6 +95,7 @@ def getResponsePacked(message_context) -> AmadeusPack:
             "- Mild conversational fillers such as えっと or まあ are allowed but should be used sparingly.\n"
             "- Allowed punctuation: 。 、 ！ ？ only.\n"
             "- Replace … or ... with 。\n"
+            "- DO NOT USE … AT ALL---IT BREAKS TTS"
             "- Do NOT output any of these characters: ()[]{}<>\"'`*:_;#@~=|\\/・\n"
             "- If the input contains quotation marks, do not copy them; say the line naturally.\n"
         )
@@ -149,19 +151,19 @@ def getOutputPacked(user_message: str) -> str:
 
 #-----DEBUGGING TOOLS-----
 
-if __name__ == "__main__":
-    from datetime import datetime, timezone
+# if __name__ == "__main__":
+#     from datetime import datetime, timezone
 
-    print("OS local:", datetime.now().astimezone().isoformat())
-    print("UTC     :", datetime.now(timezone.utc).isoformat())
+#     print("OS local:", datetime.now().astimezone().isoformat())
+#     print("UTC     :", datetime.now(timezone.utc).isoformat())
 
-    while True:
-        user_message = input("Enter msg: ").strip()
-        if user_message.lower() in {"no", "exit", "quit"}:
-            break
-        pack = getOutputPacked(user_message)
+#     while True:
+#         user_message = input("Enter msg: ").strip()
+#         if user_message.lower() in {"no", "exit", "quit"}:
+#             break
+#         pack = getOutputPacked(user_message)
         
 
-        print("\n[Amadeus]: ENG:", pack.assistant_reply_ENG)
-        print("[Amadeus]: JPS:", pack.assistant_reply_JPS)
-        print("-" * 60)
+#         print("\n[Amadeus]: ENG:", pack.assistant_reply_ENG)
+#         print("[Amadeus]: JPS:", pack.assistant_reply_JPS)
+#         print("-" * 60)

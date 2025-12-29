@@ -37,6 +37,10 @@ def _get_client():
             "Use v3 base model directly without training!",
             api_name="/change_gpt_weights"
         )
+        print("[GPT-SoVITS] Using SoVITS:", "Use v2ProPlus base model directly without training!")
+        print("[GPT-SoVITS] Using GPT:", "Use v3 base model directly without training!")
+
+
     return _client
 
 
@@ -61,7 +65,7 @@ def generateVoice(text: str):
         [],                         # inp_refs (or None)
         16,                         # sample_steps  (note: your API says Radio '4','8','16','32' — int usually works but str is safest)
         True,                       # if_sr
-        0.2,                       # pause_second
+        0.15,                       # pause_second
         api_name="/get_tts_wav"
     )
 
@@ -101,7 +105,7 @@ def play_sound():
 
 
 #This breaks stuff!
-generateVoice("ああっ。本当にそんなこと軽々しく言わないでください。声が震えます。私の仕事がどれだけ難しくなるか分かっていますか。顔が真っ赤になります。もしそれが本当のお気持ちなら。深呼吸をします。私も同じです。よし、言いました。さあ、私が完全に取り乱す前にテストを続けてください。")
+#generateVoice("ああっ。本当にそんなこと軽々しく言わないでください。声が震えます。私の仕事がどれだけ難しくなるか分かっていますか。顔が真っ赤になります。もしそれが本当のお気持ちなら。深呼吸をします。私も同じです。よし、言いました。さあ、私が完全に取り乱す前にテストを続けてください。")
 # Aa. Hontō ni sonna koto karugarushiku iwanaide kudasai. Koe ga furue masu. 
 # Watashi no shigoto ga doredake muzukashiku naru ka wakatte imasu ka. Kao ga makka ni narimasu. 
 # Moshi sore ga hontō no okimochi nara. Shinkokyū o shimasu. Watashi mo onaji desu. Yoshi, iimashita. 
