@@ -80,9 +80,14 @@ def getResponsePacked(message_context) -> AmadeusPack:
         "role": "system",
         "content": (
             "Return a JSON object with keys: assistant_reply_ENG, assistant_reply_JPS.\n"
-            "- assistant_reply_ENG: English UI text, may include stage directions like (blinks).\n"
-            "- assistant_reply_JPS: Japanese speech ONLY for TTS. Do NOT include any stage directions, parentheses (), brackets [], asterisks *, or emojis.\n"
-            "- assistant_reply_JPS must be natural spoken Japanese matching the meaning of assistant_reply_ENG.\n"
+            "- assistant_reply_ENG: English UI text, may include stage directions.\n"
+            "- assistant_reply_JPS: Japanese TTS-safe speech ONLY.\n"
+            "  Requirements for assistant_reply_JPS:\n"
+            "  * Use only plain spoken Japanese.\n"
+            "  * Allowed punctuation: 、。！？ only.\n"
+            "  * Replace ellipses '…' or '...' with '。'\n"
+            "  * Do NOT use: (), [], {}, <> , quotation marks, asterisks, emojis, markdown, colons, semicolons.\n"
+            "  * Do NOT include stage directions or meta commentary.\n"
             "Return ONLY valid JSON."
         )
     }
@@ -137,19 +142,19 @@ def getOutputPacked(user_message: str) -> str:
 
 #-----DEBUGGING TOOLS-----
 
-# if __name__ == "__main__":
-#     from datetime import datetime, timezone
+if __name__ == "__main__":
+    from datetime import datetime, timezone
 
-#     print("OS local:", datetime.now().astimezone().isoformat())
-#     print("UTC     :", datetime.now(timezone.utc).isoformat())
+    print("OS local:", datetime.now().astimezone().isoformat())
+    print("UTC     :", datetime.now(timezone.utc).isoformat())
 
-#     while True:
-#         user_message = input("Enter msg: ").strip()
-#         if user_message.lower() in {"no", "exit", "quit"}:
-#             break
-#         pack = getOutputPacked(user_message)
+    while True:
+        user_message = input("Enter msg: ").strip()
+        if user_message.lower() in {"no", "exit", "quit"}:
+            break
+        pack = getOutputPacked(user_message)
         
 
-#         print("\n[Amadeus]: ENG:", pack.assistant_reply_ENG)
-#         print("[Amadeus]: JPS:", pack.assistant_reply_JPS)
-#         print("-" * 60)
+        print("\n[Amadeus]: ENG:", pack.assistant_reply_ENG)
+        print("[Amadeus]: JPS:", pack.assistant_reply_JPS)
+        print("-" * 60)
