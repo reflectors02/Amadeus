@@ -7,6 +7,12 @@ import threading
 application = Flask(__name__)
 CORS(application)
 
+# pre:
+# - JSON body contains an "key" field
+#
+# post:
+# - updates the active API key if provided
+# - returns status indicating success or error
 @application.route("/set_key", methods=["POST"])
 def set_api_key():
     print("[Flask] /set_key route triggered")  # ← add this
@@ -17,7 +23,13 @@ def set_api_key():
         return jsonify({"status": "ok", "message": "API key received"})
     else:
         return jsonify({"status": "error", "message": "No key received"}), 400
-    
+
+# pre:
+# - JSON body contains "user_input" as a string
+#
+# post:
+# - generates an assistant response and voice output
+# - returns English UI text to the client
 @application.route("/", methods=["POST"])
 def request_message():
     content = request.get_json()
@@ -32,11 +44,22 @@ def request_message():
 
     return jsonify({"response": pack.assistant_reply_ENG})
 
+# pre
+# post:
+# - clears all stored conversation memory
+# - returns confirmation status
 @application.route("/memory_reset", methods=["POST"])
 def memory_reset():
     resetMemory()
     return jsonify({"status": "ok", "message": "Memory reset"})
 
+
+# pre:
+# - JSON body contains "model" option as string
+#
+# post:
+# - updates the active LLM model if provided
+# - returns success or error status
 @application.route("/setLLMModel", methods=["POST"])
 def settingLLMModel():
     data = request.get_json() or {}
@@ -47,6 +70,9 @@ def settingLLMModel():
     else:
         return jsonify({"status": "error", "message": "No model recieved"}), 400
 
+# pre
+# post:
+# - returns the currently active LLM model name as a string
 @application.route("/getCurrLLMModel", methods=["GET"])
 def getCurrLLMModel():
     LLM_Model = getLLMModel()
@@ -55,7 +81,9 @@ def getCurrLLMModel():
     else:
         return jsonify({"status": "error", "message": "No Model Selected"}), 400
 
-
+# pre
+# post:
+# - returns all stored conversation messages in list of Jsons
 @application.route("/getMemory", methods=["POST"])
 def getMemory():
     msgs = get_raw_memory()

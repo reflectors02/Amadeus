@@ -9,7 +9,7 @@ PATH_TO_MEMORY = os.path.join(TXT_DIR, "memory.db")
 PATH_TO_PERSONALITY = os.path.join(TXT_DIR, "personality.txt")
 PATH_TO_API_KEY = os.path.join(TXT_DIR, "api_key.txt")
 PATH_TO_LLM_MODEL = os.path.join(TXT_DIR, "LLM_Model.txt")
-PATH_TO_TRANSLATION_INSTRUCTIONS = os.path.join(TXT_DIR, "translation_instructions.txt")
+#PATH_TO_TRANSLATION_INSTRUCTIONS = os.path.join(TXT_DIR, "translation_instructions.txt")
 
 DEFAULT_LLM_MODEL = "deepseek/deepseek-v3.2-exp"
 
@@ -60,12 +60,6 @@ def load_default_personality_messages() -> List[Dict[str, str]]:
 
 
 # ---------- Additional Instructions ---------- (NO SQL)
-
-def load_translation_instructions() -> str:
-    _ensure_file(PATH_TO_TRANSLATION_INSTRUCTIONS)
-    with open(PATH_TO_TRANSLATION_INSTRUCTIONS, "r", encoding="utf-8") as f:
-        return f.read()
-
 
 # pre: memory database may exist or not; messages table may be empty or populated
 # post: returns a single system message containing derived internal context

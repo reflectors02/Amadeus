@@ -12,7 +12,6 @@ class AmadeusPack(BaseModel):
     assistant_reply_JPS: str = Field(..., description="Japanese text to speak with TTS. Must contain ONLY speakable dialogue. No stage directions, no brackets, no emojis.")
 
 
-
 #pre: The intended new_model is a string e.g., "deepseek/deepseek-v3.2-exp"
 #post: global LLM_Model should be changed to new_model
 #      LLM_Model.txt should be updated accordingly, to store the latest model the user chose.
@@ -56,6 +55,18 @@ def get_raw_memory():
     return store.load_memory_raw()
 
 
+# pre:
+# - message_context is a List[Dict[str, str]] with keys: "role" and "content"
+# - message_context contains recent user/assistant messages only (no system persona)
+# - default_personality and internal system context are available
+# - LLM (via LangChain + OpenRouter) is properly configured
+#
+# post:
+# - returns an AmadeusPack with:
+#     - assistant_reply_ENG: English UI text (may include stage directions)
+#     - assistant_reply_JPS: Japanese TTS-safe speech text (no stage directions)
+# - exactly ONE LLM call is made under normal operation
+# - on structured output failure, falls back to a plain LLM call with a safe default Japanese reply
 def getResponsePacked(message_context) -> AmadeusPack:
     llm = get_llm(API_KEY, LLM_Model)
 
@@ -94,8 +105,19 @@ def getResponsePacked(message_context) -> AmadeusPack:
 
 
 
-#pre: user_input e.g., "Testing!"
-#post: returns a english response from openrouter e.g., "Hello from deepseek!", updates memory.txt.
+# pre:
+# - user_message is a non-empty string from the user
+# - SQLite memory store is available and writable
+# - getResponsePacked(message_context) is defined and functional
+#
+# post:
+# - appends the user message to memory
+# - builds recent conversation context from memory
+# - calls getResponsePacked(...) exactly once
+# - appends assistant_reply_ENG to memory
+# - returns an AmadeusPack containing:
+#     - assistant_reply_ENG (English UI text)
+#     - assistant_reply_JPS (Japanese TTS-safe speech text)
 def getOutputPacked(user_message: str) -> str:
     store.append_message("user", user_message)
     context = store.build_prompt_messages()[-80:]
