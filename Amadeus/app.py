@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from Amadeus import getOutput, getTranslation, setKey, resetMemory, setLLMModel, getLLMModel, get_raw_memory
+from Amadeus import getOutputPacked, setKey, resetMemory, setLLMModel, getLLMModel, get_raw_memory
 from AmadeusSpeak import generateVoice, play_sound
 from flask_cors import CORS
 import threading
@@ -22,11 +22,15 @@ def set_api_key():
 def request_message():
     content = request.get_json()
     user_input = content.get("user_input", "")
-    assistant_reply_ENG = getOutput(user_input)
-    assistant_reply_JPS = getTranslation(assistant_reply_ENG)
-    generateVoice(assistant_reply_JPS)
+
+    pack = getOutputPacked(user_input)
+    print("\n[Flask]: ENG:", pack.assistant_reply_ENG)
+    print("[Flask]: JPS:", pack.assistant_reply_JPS)
+    
+    generateVoice(pack.assistant_reply_JPS)
     threading.Thread(target=play_sound).start()
-    return jsonify({"response": assistant_reply_ENG})
+
+    return jsonify({"response": pack.assistant_reply_ENG})
 
 @application.route("/memory_reset", methods=["POST"])
 def memory_reset():
