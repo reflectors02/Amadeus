@@ -153,10 +153,10 @@ WINDOWS: Run Amadeus-Project/Builds/Amadeus_UI.exe/Amadeus.exe
 Rule of thumb: This is a general guide that should work for most systems. I cannot possibly take care of every possibe scenario. If you encounter any issues not listed here, just ask chatgpt. 
 ```
 
-## Updating the Project
+### Updating the Project
 The project does not update automatically. To get the latest features and bug fixes, you must manually pull updates for both the main project and its dependencies.
 
-#### Standard Update
+Standard Update
 Run these commands in your Anaconda Prompt:
 
 ```
