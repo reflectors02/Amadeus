@@ -1,4 +1,14 @@
 # Amadeus
+## About Amadeus-Project
+Amadeus started as a side project during a relatively light academic quarter—mostly out of curiosity and boredom. What began as a simple experiment slowly evolved into a long-term personal project that I continued refining even when coursework became heavier.
+
+As the project grew, I repeatedly refactored it from the ground up. Early design mistakes—such as redundant API calls, fragile memory handling, and tightly coupled components—were removed and replaced with cleaner architecture, consolidated response pipelines, persistent memory, and more efficient voice and language processing. Much of the work has been about undoing bad design choices and rebuilding them properly once I had the experience to recognize them.
+
+The inspiration for Amadeus comes from Steins;Gate, which I watched years ago. At the time, the idea of building something like Amadeus felt purely fictional. After progressing through university coursework in computer science, physics, and systems programming, I finally had the technical foundation to turn that inspiration into a real, working system rather than just a concept.
+
+Today, Amadeus is both a creative and technical sandbox: a place to experiment with conversational memory, voice synthesis, real-time interaction, and long-running assistant behavior. It’s not meant to be perfect or finished—it's a living project that reflects how my understanding of software architecture and system design has matured over time.
+
+
 ## Installation (Conda Recommended)
 
 ### 0. Installation Guide:

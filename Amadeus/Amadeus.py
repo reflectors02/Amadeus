@@ -7,15 +7,6 @@ API_KEY = store.load_api_key()
 LLM_Model = store.load_llm_model(default_model=default_LLM_Model)
 default_personality = store.load_default_personality_messages()
 
-class AmadeusPack(BaseModel):
-    assistant_reply_ENG: str = Field(..., description="English text to show in UI. May include stage directions.")
-    assistant_reply_JPS: str = Field(..., description=(
-        "Japanese TTS text only. Must be plain spoken Japanese."
-        " Allowed: Japanese characters, ASCII letters/digits if needed, and these punctuation marks only: 、。！？"
-        " Newlines are allowed. Do NOT include: parentheses/brackets/quotes/asterisks/emojis/markdown/ellipses (…)/colons/semicolons."
-        " Avoid long dashes and repeated punctuation.")
-    )
-
 
 #pre: The intended new_model is a string e.g., "deepseek/deepseek-v3.2-exp"
 #post: global LLM_Model should be changed to new_model
@@ -59,6 +50,16 @@ def resetMemory():
 def get_raw_memory():
     return store.load_memory_raw()
 
+
+class AmadeusPack(BaseModel):
+    assistant_reply_ENG: str = Field(..., description="English text to show in UI. May include stage directions.")
+    assistant_reply_JPS: str = Field(..., description=(
+        "Japanese TTS text only. Must be plain spoken Japanese."
+        " Allowed: Japanese characters, ASCII letters/digits if needed, and these punctuation marks only: 、。！？"
+        " Newlines are allowed. Do NOT include: parentheses/brackets/quotes/asterisks/emojis/markdown/ellipses (…)/colons/semicolons."
+        " Avoid long dashes and repeated punctuation.")
+    )
+    
 
 # pre:
 # - message_context is a List[Dict[str, str]] with keys: "role" and "content"

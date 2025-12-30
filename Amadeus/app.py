@@ -32,6 +32,7 @@ def set_api_key():
 # - returns English UI text to the client
 @application.route("/", methods=["POST"])
 def request_message():
+    print("[Flask] / route triggered")  
     content = request.get_json()
     user_input = content.get("user_input", "")
 
@@ -50,6 +51,7 @@ def request_message():
 # - returns confirmation status
 @application.route("/memory_reset", methods=["POST"])
 def memory_reset():
+    print("[Flask] /memory_reset triggered")  
     resetMemory()
     return jsonify({"status": "ok", "message": "Memory reset"})
 
@@ -62,6 +64,7 @@ def memory_reset():
 # - returns success or error status
 @application.route("/setLLMModel", methods=["POST"])
 def settingLLMModel():
+    print("[Flask] /setLLMModel triggered")  
     data = request.get_json() or {}
     new_model = data.get("model", "").strip()
     if new_model:
@@ -75,6 +78,7 @@ def settingLLMModel():
 # - returns the currently active LLM model name as a string
 @application.route("/getCurrLLMModel", methods=["GET"])
 def getCurrLLMModel():
+    print("[Flask] /getCurrLLMModel triggered")  
     LLM_Model = getLLMModel()
     if LLM_Model:
         return jsonify({"status": "ok", "message": LLM_Model})
@@ -86,5 +90,6 @@ def getCurrLLMModel():
 # - returns all stored conversation messages in list of Jsons
 @application.route("/getMemory", methods=["POST"])
 def getMemory():
+    print("[Flask] /getMemory triggered")  
     msgs = get_raw_memory()
     return jsonify({"status":"ok","messages": msgs})
