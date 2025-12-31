@@ -120,7 +120,7 @@ def getResponsePacked(message_context) -> AmadeusPack:
         plain = llm.invoke(messages).content
         return AmadeusPack(
             assistant_reply_ENG=plain, 
-            assistant_reply_JPS="……ごめん、今ちょっと調子が悪い。もう一回言って。"
+            assistant_reply_JPS="ごめん、今ちょっと調子が悪い。もう一回言って。"
             )
 
 
