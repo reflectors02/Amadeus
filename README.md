@@ -88,6 +88,13 @@ pip uninstall -y torch torchvision torchaudio
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ``` 
 
+### 4.5 CPU ONLY---NVIDIA GPU PLEASE SKIP
+```
+# In this step, we're downgrading torch because torch version 2.9 has some malfunctions. We must switch back to 2.5.1
+
+pip uninstall -y torch torchvision torchaudio torchcodec
+pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cpu
+```
 
 ### 5. Download required pretrained_models from huggingface
 
