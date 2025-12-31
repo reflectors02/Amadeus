@@ -27,18 +27,18 @@ https://visualstudio.microsoft.com/downloads/?q=build+tools
 
 ### 2. Clone the repository(s)
 ```
-#NOTES: ALWAYS USE ANACONDA PROMPT, NEVER USE POWERSHELL. POWERSHELL CAUSES MAJOR PROBLEMS WITH CONDA
+# NOTES: ALWAYS USE ANACONDA PROMPT, NEVER USE POWERSHELL. POWERSHELL CAUSES MAJOR PROBLEMS WITH CONDA
 
 git clone https://github.com/reflectors02/Amadeus-Project.git
 cd Amadeus-Project
 
-#INSTALLING GPTSOVITS (IMPORTANT!)
+# INSTALLING GPTSOVITS (IMPORTANT!)
 
 # Clone the required GPT-SoVITS dependency inside the Amadeus-folder
 git clone https://github.com/RVC-Boss/GPT-SoVITS.git
 
 
-#CHECK IF THIS IS TRUE
+# CHECK IF THIS IS TRUE
 Your repository should look like this:
 Amadeus-Project/
 ├── Amadeus/
@@ -53,14 +53,14 @@ Amadeus-Project/
 
 ### 3. Create Virtual Environment(s)
 ```
-#CREATING AMADEUS ENVIRONMENT
+# CREATING AMADEUS ENVIRONMENT
 
 (cd into Amadeus-Project/Amadeus)
 cd Amadeus
 conda env create -f environment.yml
 
 
-#CREATING GPTSOVITS ENVIRONMENT
+# CREATING GPTSOVITS ENVIRONMENT
 cd ..
 (you should now be returned to Amadeus-Project/)
 
@@ -72,6 +72,11 @@ conda activate GPTSoVits
 
 pip install -r extra-req.txt --no-deps
 pip install -r requirements.txt
+
+# Install FFMPEG
+
+conda install ffmpeg
+
 ```
 
 ### 4. NVIDIA GPU ONLY:
